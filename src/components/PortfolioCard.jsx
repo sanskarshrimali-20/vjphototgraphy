@@ -4,12 +4,12 @@ export default function PortfolioCard({ item }) {
       <a href="#contact" aria-label={`Enquire about ${item.title}`}>
         <div className="image-wrap">
           <img src={item.image} alt={`${item.title} ${item.category} project`} loading="lazy" />
-          <div className="card-overlay"><span>View story</span><strong>{item.category}</strong></div>
-          <span className="card-arrow">↗</span>
+          <span className="card-arrow">View story ↗</span>
         </div>
         <div className="card-meta">
+          <span className="card-index">{item.year}</span>
           <div><h3>{item.title}</h3><span>{item.category}</span></div>
-          <span>{item.year}</span>
+          <span className="card-type">Case study</span>
         </div>
       </a>
     </article>

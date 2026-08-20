@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap');
-:root { --ink: #f5eee5; --paper: #121110; --sand: #211c1a; --night: #080808; --coral: #e57968; --peach: #f3b197; --saffron: #e4aa45; --sage: #a6ad91; --muted: #aaa19a; --line: #3e3935; --display: 'Playfair Display', Georgia, serif; --sans: 'DM Sans', sans-serif; font-family: var(--sans); color: var(--ink); background: var(--paper); font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+:root { --ink: #1d1b18; --paper: #f7f4ef; --sand: #ebe6de; --night: #202620; --coral: #c96759; --peach: #e9b59d; --saffron: #c59542; --sage: #a6ad91; --muted: #77716a; --line: #d3ccc2; --display: 'Playfair Display', Georgia, serif; --sans: 'DM Sans', sans-serif; --mono: 'DM Mono', monospace; font-family: var(--sans); color: var(--ink); background: var(--paper); font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
 html { scroll-behavior: smooth; }
 body { margin: 0; min-width: 320px; }
 button, input, textarea { font-family: inherit; }
