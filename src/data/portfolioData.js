@@ -41,6 +41,34 @@ export const portfolioItems = [
     image: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1200&q=85',
     size: 'wide',
   },
+  {
+    title: 'The Family Table',
+    category: 'Indian Weddings',
+    year: '2022',
+    image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=85',
+    size: 'wide',
+  },
+  {
+    title: 'Blue Hour, Goa',
+    category: 'Travel',
+    year: '2021',
+    image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85',
+    size: 'tall',
+  },
+  {
+    title: 'Small Wonders',
+    category: 'Baby Showers',
+    year: '2021',
+    image: 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=900&q=85',
+    size: 'square',
+  },
+  {
+    title: 'A Night to Remember',
+    category: 'Parties',
+    year: '2020',
+    image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=85',
+    size: 'wide',
+  },
 ]
 
 export const categories = ['All work', 'Indian Weddings', 'Parties', 'Baby Showers', 'Pre-Weddings', 'Travel']
