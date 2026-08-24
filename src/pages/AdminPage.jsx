@@ -64,7 +64,7 @@ export default function AdminPage() {
         if (uploadError) throw uploadError
         uploadedPaths.push(filePath)
         const { data: publicUrl } = supabase.storage.from('portfolio').getPublicUrl(filePath)
-        records.push({ category, image_url: publicUrl.publicUrl, size, storage_path: filePath, title, year })
+        records.push({ category, image_url: publicUrl.publicUrl, size, title, year })
       }
 
       const { error: insertError } = await supabase.from('gallery_items').insert(records)
