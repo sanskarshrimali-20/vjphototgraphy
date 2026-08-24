@@ -39,9 +39,15 @@ export default function HomePage() {
   useEffect(() => {
     if (!supabase) return
 
-    supabase.from('gallery_items').select('*').order('created_at', { ascending: false }).then(({ data }) => {
-      if (data?.length) setGalleryItems(data.map((item) => ({ ...item, image: item.image_url })))
-    })
+    function loadGallery() {
+      return supabase.from('gallery_items').select('*').order('created_at', { ascending: false }).then(({ data, error }) => {
+      if (!error) setGalleryItems((data || []).map((item) => ({ ...item, image: item.image_url })))
+      })
+    }
+
+    loadGallery()
+    window.addEventListener('focus', loadGallery)
+    return () => window.removeEventListener('focus', loadGallery)
   }, [])
 
   async function handleSubmit(event) {
