@@ -8,6 +8,8 @@ create table public.gallery_items (
   created_at timestamptz not null default now()
 );
 
+alter table public.gallery_items add column if not exists storage_path text;
+
 alter table public.gallery_items enable row level security;
 
 create policy "Published gallery is public"

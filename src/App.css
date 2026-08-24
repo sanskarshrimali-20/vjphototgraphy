@@ -208,4 +208,18 @@ input:focus, textarea:focus { border-color: var(--paper); }
 .admin-heading { align-items: end; display: flex; justify-content: space-between; }
 .admin-heading h1 { margin-bottom: 0; }
 .admin-logout { align-items: center; background: transparent; border: 0; color: var(--muted); cursor: pointer; display: inline-flex; font: 600 10px var(--sans); gap: 7px; letter-spacing: .1em; text-transform: uppercase; }
+.admin-gallery { border-top: 1px solid var(--line); margin-top: 110px; padding-top: 30px; }
+.admin-gallery-heading { align-items: end; display: flex; justify-content: space-between; margin-bottom: 32px; }
+.admin-gallery-heading h2 { color: var(--ink); font: 400 clamp(2.5rem, 5vw, 4rem)/.9 var(--display); margin-top: 20px; }
+.admin-gallery-heading em { color: var(--coral); }
+.admin-gallery-heading select { background: transparent; border: 0; border-bottom: 1px solid var(--line); color: var(--muted); font: 600 10px var(--sans); letter-spacing: .1em; padding: 10px 0; text-transform: uppercase; }
+.admin-gallery-grid { display: grid; gap: 24px; grid-template-columns: repeat(3, 1fr); }
+.admin-gallery-item { border-bottom: 1px solid var(--line); margin: 0; }
+.admin-gallery-item img { aspect-ratio: 1 / 1.1; display: block; filter: grayscale(.15); object-fit: cover; width: 100%; }
+.admin-gallery-item > div { align-items: center; display: grid; gap: 6px; grid-template-columns: 1fr auto; padding: 14px 0 18px; }
+.admin-gallery-item strong { font: 400 19px var(--display); }
+.admin-gallery-item span { color: var(--muted); font: 9px var(--sans); grid-column: 1; letter-spacing: .08em; text-transform: uppercase; }
+.admin-delete { background: transparent; border: 0; color: var(--coral); cursor: pointer; font: 600 9px var(--sans); grid-column: 2; grid-row: 1 / span 2; letter-spacing: .1em; padding: 8px 0 8px 12px; text-transform: uppercase; }
+.admin-delete:disabled { cursor: wait; opacity: .5; }
+@media (max-width: 700px) { .admin-gallery { margin-top: 80px; } .admin-gallery-heading { align-items: flex-start; flex-direction: column; gap: 24px; } .admin-gallery-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 700px) { .admin-page { padding: 28px 8vw; } .admin-inner { margin-top: 12vh; } .admin-fields { display: block; } .admin-heading { align-items: flex-start; flex-direction: column; gap: 30px; } }
