@@ -39,6 +39,7 @@ export default function AdminPage() {
   async function handleUpload(event) {
     event.preventDefault()
     if (!files.length) return setError('Choose at least one image.')
+    const form = event.currentTarget
     setBusy(true)
     setError('')
     setMessage('')
@@ -60,7 +61,7 @@ export default function AdminPage() {
       setMessage(`${files.length} image${files.length === 1 ? '' : 's'} uploaded. They are now live in the selected section.`)
       setTitle('')
       setFiles([])
-      event.currentTarget.reset()
+      form.reset()
     } catch (uploadError) {
       if (uploadedPaths.length) await supabase.storage.from('portfolio').remove(uploadedPaths)
       setError(uploadError.message)
