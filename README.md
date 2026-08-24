@@ -27,7 +27,7 @@ npm install
 npm run dev
 ```
 
-The homepage hero uses the portfolio data as an autoplaying, touch-swipable carousel. The enquiry form opens a pre-filled email draft addressed to `vijaysharmaphotography@gmail.com`.
+The homepage hero uses the portfolio data as an autoplaying, touch-swipable carousel. The enquiry form sends submissions through FormSubmit to `vijaysharmaphotography@gmail.com`.
 
 ## Checks
 
@@ -51,4 +51,4 @@ This is a static Vite site and is ready to deploy on Vercel.
 
 The repository includes `vercel.json` with these settings already configured. Every future push to the connected branch will automatically redeploy the site.
 
-The enquiry form currently uses the visitor's email client. Replace the `mailto:` flow in `src/pages/HomePage.jsx` with a backend endpoint when one is available.
+The enquiry form uses FormSubmit's AJAX endpoint. Confirm the activation email from FormSubmit after the first live submission, or replace the endpoint with a dedicated email service when one is available.

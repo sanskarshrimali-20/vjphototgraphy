@@ -91,11 +91,14 @@ em { color: var(--coral); font-family: var(--display); font-style: italic; }
 .contact-form-wrap > p { color: #531c18; font-size: 14px; line-height: 1.5; max-width: 270px; }
 form { margin-top: 38px; }
 label { color: #531c18; display: block; font: 700 10px var(--sans); letter-spacing: .1em; text-transform: uppercase; }
-input, textarea { background: transparent; border: 0; border-bottom: 1px solid rgba(83,28,24,.45); border-radius: 0; box-sizing: border-box; color: var(--paper); display: block; font: 400 18px var(--display); margin: 9px 0 28px; outline: 0; padding: 11px 0; resize: vertical; width: 100%; }
+input, textarea { background: transparent; border: 0; border-bottom: 1px solid rgba(83,28,24,.45); border-radius: 0; box-sizing: border-box; color: var(--ink); display: block; font: 400 18px var(--display); margin: 9px 0 28px; outline: 0; padding: 11px 0; resize: vertical; width: 100%; }
 input::placeholder, textarea::placeholder { color: rgba(83,28,24,.58); }
 input:focus, textarea:focus { border-color: var(--paper); }
+.character-count { color: rgba(83,28,24,.65); display: block; font: 10px var(--mono); margin-top: -20px; text-align: right; }
 .submit-button { align-items: center; background: var(--paper); border: 0; color: var(--ink); cursor: pointer; display: flex; font: 700 10px var(--sans); gap: 24px; letter-spacing: .1em; padding: 16px 20px; text-transform: uppercase; }
+.submit-button:disabled { cursor: wait; opacity: .6; }
 .success-message { color: var(--paper); font: 400 28px var(--display); margin-top: 38px; }
+.submit-error { color: #8d2e25; font: 12px/1.4 var(--sans); margin: 0 0 18px; }
 .site-footer { align-items: center; background: var(--paper); border-top: 1px solid var(--line); color: var(--muted); display: flex; font: 10px var(--sans); justify-content: space-between; letter-spacing: .08em; padding: 28px 5vw; text-transform: uppercase; }
 .site-footer div { display: flex; gap: 20px; }
 .site-footer a { align-items: center; display: flex; gap: 6px; }

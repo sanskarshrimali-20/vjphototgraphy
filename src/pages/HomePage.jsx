@@ -7,11 +7,14 @@ import SiteIntro from '../components/SiteIntro'
 
 const instagramUrl = 'https://www.instagram.com/vijaysharmaphotography_?igsi=ZG92ZHF2cXR2NTE='
 const facebookUrl = 'https://www.facebook.com/vijaysharmaphotography_/'
-const enquiryEmail = 'vijaysharmaphotography@gmail.com'
+const enquiryEmail = 'sanskarsharma2012@gmail.com'
 
 export default function HomePage() {
   const [activeCategory, setActiveCategory] = useState('All work')
   const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const [detailLength, setDetailLength] = useState(0)
   const visibleItems = activeCategory === 'All work'
     ? portfolioItems
     : portfolioItems.filter((item) => item.category === activeCategory)
@@ -31,15 +34,27 @@ export default function HomePage() {
     return () => observer.disconnect()
   }, [])
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const email = formData.get('email')
     const details = formData.get('details')
-    const subject = encodeURIComponent('New photography enquiry')
-    const body = encodeURIComponent(`Email: ${email}\n\nProject details:\n${details}`)
-    window.location.href = `mailto:${enquiryEmail}?subject=${subject}&body=${body}`
-    setSent(true)
+    setSubmitting(true)
+    setSubmitError('')
+
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${enquiryEmail}`, {
+        body: JSON.stringify({ _subject: 'New photography enquiry', email, details }),
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        method: 'POST',
+      })
+      if (!response.ok) throw new Error('Unable to send enquiry')
+      setSent(true)
+    } catch {
+      setSubmitError('Something went wrong. Please try again or email directly.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -61,7 +76,7 @@ export default function HomePage() {
       </section>
       <section className="contact-section reveal" id="contact">
         <div className="contact-title"><span className="section-number">Start a conversation</span><h2>Bring the<br /><em>good stuff.</em></h2><p>Dates, places, wild ideas. Send them all.</p></div>
-        <div className="contact-form-wrap"><p>Tell me a little about what you are making. I would love to hear it.</p>{sent ? <div className="success-message">Your email draft is ready. Thank you.</div> : <form onSubmit={handleSubmit}><label>Your email<input name="email" required type="email" placeholder="you@example.com" /></label><label>Project details<textarea name="details" required rows="3" placeholder="A few words about the idea, date, and place..." /></label><button className="submit-button" type="submit">Send enquiry <FiArrowUpRight /></button></form>}</div>
+        <div className="contact-form-wrap"><p>Tell me a little about what you are making. I would love to hear it.</p>{sent ? <div className="success-message" role="status">Thank you. Your enquiry has been sent.</div> : <form onSubmit={handleSubmit}><label>Your email<input name="email" required type="email" placeholder="you@example.com" /></label><label>Project details<textarea name="details" required rows="3" maxLength="600" onInput={(event) => setDetailLength(event.currentTarget.value.length)} placeholder="A few words about the idea, date, and place..." /><span className="character-count" aria-live="polite">{detailLength} / 600</span></label>{submitError && <p className="submit-error" role="alert">{submitError}</p>}<button className="submit-button" disabled={submitting} type="submit">{submitting ? 'Sending...' : 'Send enquiry'} <FiArrowUpRight /></button></form>}</div>
       </section>
       <footer className="site-footer"><span>© 2025 Vijay Sharma Photography</span><span>Available worldwide</span><div className="social-links"><a href="#contact" aria-label="Email Vijay Sharma"><FiMail /> Email</a><a href={instagramUrl} aria-label="Open Vijay Sharma Photography on Instagram" target="_blank" rel="noreferrer"><FaInstagram /> Instagram</a><a href={facebookUrl} aria-label="Open Vijay Sharma Photography on Facebook" target="_blank" rel="noreferrer"><FaFacebookF /> Facebook</a></div></footer>
     </main>
