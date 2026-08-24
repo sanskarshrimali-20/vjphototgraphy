@@ -25,9 +25,7 @@ insert into storage.buckets (id, name, public)
 values ('portfolio', 'portfolio', true)
 on conflict (id) do nothing;
 
-create policy "Portfolio images are public"
-on storage.objects for select
-using (bucket_id = 'portfolio');
+drop policy if exists "Portfolio images are public" on storage.objects;
 
 create policy "Authenticated users can upload portfolio images"
 on storage.objects for insert
