@@ -27,7 +27,7 @@ npm install
 npm run dev
 ```
 
-The enquiry form currently demonstrates the success state locally. Connect its `handleSubmit` function in `src/pages/HomePage.jsx` to the backend endpoint once the API contract is available.
+The homepage hero uses the portfolio data as an autoplaying, touch-swipable carousel. The enquiry form opens a pre-filled email draft addressed to `vijaysharmaphotography@gmail.com`.
 
 ## Checks
 
@@ -51,4 +51,4 @@ This is a static Vite site and is ready to deploy on Vercel.
 
 The repository includes `vercel.json` with these settings already configured. Every future push to the connected branch will automatically redeploy the site.
 
-The enquiry form is currently local-only. Add the backend API URL as a Vercel environment variable when the API is ready, then connect the form submission in `src/pages/HomePage.jsx`.
+The enquiry form currently uses the visitor's email client. Replace the `mailto:` flow in `src/pages/HomePage.jsx` with a backend endpoint when one is available.

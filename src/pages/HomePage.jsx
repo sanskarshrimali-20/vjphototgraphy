@@ -7,6 +7,7 @@ import SiteIntro from '../components/SiteIntro'
 
 const instagramUrl = 'https://www.instagram.com/vijaysharmaphotography_?igsi=ZG92ZHF2cXR2NTE='
 const facebookUrl = 'https://www.facebook.com/vijaysharmaphotography_/'
+const enquiryEmail = 'vijaysharmaphotography@gmail.com'
 
 export default function HomePage() {
   const [activeCategory, setActiveCategory] = useState('All work')
@@ -32,6 +33,12 @@ export default function HomePage() {
 
   function handleSubmit(event) {
     event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const email = formData.get('email')
+    const details = formData.get('details')
+    const subject = encodeURIComponent('New photography enquiry')
+    const body = encodeURIComponent(`Email: ${email}\n\nProject details:\n${details}`)
+    window.location.href = `mailto:${enquiryEmail}?subject=${subject}&body=${body}`
     setSent(true)
   }
 
@@ -54,7 +61,7 @@ export default function HomePage() {
       </section>
       <section className="contact-section reveal" id="contact">
         <div className="contact-title"><span className="section-number">Start a conversation</span><h2>Bring the<br /><em>good stuff.</em></h2><p>Dates, places, wild ideas. Send them all.</p></div>
-        <div className="contact-form-wrap"><p>Tell me a little about what you are making. I would love to hear it.</p>{sent ? <div className="success-message">Thank you. Your note is on its way.</div> : <form onSubmit={handleSubmit}><label>Your email<input required type="email" placeholder="you@example.com" /></label><label>Project details<textarea required rows="3" placeholder="A few words about the idea, date, and place..." /></label><button className="submit-button" type="submit">Send enquiry <FiArrowUpRight /></button></form>}</div>
+        <div className="contact-form-wrap"><p>Tell me a little about what you are making. I would love to hear it.</p>{sent ? <div className="success-message">Your email draft is ready. Thank you.</div> : <form onSubmit={handleSubmit}><label>Your email<input name="email" required type="email" placeholder="you@example.com" /></label><label>Project details<textarea name="details" required rows="3" placeholder="A few words about the idea, date, and place..." /></label><button className="submit-button" type="submit">Send enquiry <FiArrowUpRight /></button></form>}</div>
       </section>
       <footer className="site-footer"><span>© 2025 Vijay Sharma Photography</span><span>Available worldwide</span><div className="social-links"><a href="#contact" aria-label="Email Vijay Sharma"><FiMail /> Email</a><a href={instagramUrl} aria-label="Open Vijay Sharma Photography on Instagram" target="_blank" rel="noreferrer"><FaInstagram /> Instagram</a><a href={facebookUrl} aria-label="Open Vijay Sharma Photography on Facebook" target="_blank" rel="noreferrer"><FaFacebookF /> Facebook</a></div></footer>
     </main>

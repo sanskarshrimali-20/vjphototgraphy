@@ -112,7 +112,9 @@ input:focus, textarea:focus { border-color: var(--paper); }
 .main-nav a { color: inherit; }
 .intro { background: #171714; color: #f7f4ef; min-height: 94vh; padding: 0 7vw; }
 .intro::before, .intro::after { display: none; }
-.intro-image { background: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90') center/cover; inset: 0; position: absolute; transform: scale(1.02); }
+.intro-slides { inset: 0; overflow: hidden; position: absolute; }
+.intro-image { height: 100%; inset: 0; object-fit: cover; opacity: 0; position: absolute; transform: scale(1.01); transition: opacity .15s ease, transform .4s ease; width: 100%; }
+.intro-image.is-active { opacity: 1; transform: scale(1); }
 .intro-shade { background: linear-gradient(90deg, rgba(10,10,9,.88), rgba(10,10,9,.25) 65%), linear-gradient(0deg, rgba(10,10,9,.72), transparent 50%); inset: 0; position: absolute; }
 .intro-topline, .intro-footer { color: rgba(247,244,239,.72); display: flex; font: 500 10px var(--mono); justify-content: space-between; letter-spacing: .05em; position: absolute; text-transform: uppercase; z-index: 1; }
 .intro-topline { left: 7vw; right: 7vw; top: 115px; }
@@ -125,6 +127,10 @@ input:focus, textarea:focus { border-color: var(--paper); }
 .intro-cta span:last-child { color: var(--coral); font-size: 18px; }
 .intro-footer { align-items: center; bottom: 36px; gap: 16px; left: 7vw; right: 7vw; }
 .intro-line { background: rgba(247,244,239,.45); height: 1px; width: 90px; }
+.intro-controls { display: flex; gap: 8px; margin-left: auto; }
+.intro-controls button { align-items: center; background: rgba(10,10,9,.3); border: 1px solid rgba(247,244,239,.55); border-radius: 50%; color: #f7f4ef; cursor: pointer; display: inline-flex; height: 32px; justify-content: center; padding: 0; transition: background .25s, color .25s; width: 32px; }
+.intro-controls button:hover { background: #f7f4ef; color: var(--ink); }
+.intro-controls svg { font-size: 16px; }
 .work-section { background: var(--paper); padding: 150px 10vw 170px; }
 .work-heading { align-items: end; display: flex; justify-content: space-between; margin-bottom: 80px; }
 .work-heading h2 { font: 400 clamp(4rem, 8vw, 8rem)/.8 var(--display); letter-spacing: -.07em; margin-top: 30px; }
