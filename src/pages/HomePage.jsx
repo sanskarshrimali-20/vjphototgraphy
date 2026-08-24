@@ -4,6 +4,7 @@ import { FaFacebookF, FaInstagram } from 'react-icons/fa6'
 import { categories, portfolioItems, specialties } from '../data/portfolioData'
 import PortfolioCard from '../components/PortfolioCard'
 import SiteIntro from '../components/SiteIntro'
+import { supabase } from '../lib/supabase'
 
 const instagramUrl = 'https://www.instagram.com/vijaysharmaphotography_?igsi=ZG92ZHF2cXR2NTE='
 const facebookUrl = 'https://www.facebook.com/vijaysharmaphotography_/'
@@ -15,9 +16,10 @@ export default function HomePage() {
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const [detailLength, setDetailLength] = useState(0)
+  const [galleryItems, setGalleryItems] = useState(portfolioItems)
   const visibleItems = activeCategory === 'All work'
-    ? portfolioItems
-    : portfolioItems.filter((item) => item.category === activeCategory)
+    ? galleryItems
+    : galleryItems.filter((item) => item.category === activeCategory)
 
   useEffect(() => {
     const revealItems = document.querySelectorAll('.reveal')
@@ -32,6 +34,14 @@ export default function HomePage() {
 
     revealItems.forEach((item) => observer.observe(item))
     return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!supabase) return
+
+    supabase.from('gallery_items').select('*').order('created_at', { ascending: false }).then(({ data }) => {
+      if (data?.length) setGalleryItems(data.map((item) => ({ ...item, image: item.image_url })))
+    })
   }, [])
 
   async function handleSubmit(event) {

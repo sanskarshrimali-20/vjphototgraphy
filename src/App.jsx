@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { FiMenu, FiX } from 'react-icons/fi'
 import { FaFacebookF, FaInstagram } from 'react-icons/fa6'
 import HomePage from './pages/HomePage'
+import AdminPage from './pages/AdminPage'
 import './App.css'
 
 const instagramUrl = 'https://www.instagram.com/vijaysharmaphotography_?igsi=ZG92ZHF2cXR2NTE='
@@ -9,6 +10,8 @@ const facebookUrl = 'https://www.facebook.com/vijaysharmaphotography_/'
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+
+  if (window.location.pathname === '/admin') return <AdminPage />
 
   return (
     <div className="site-shell">

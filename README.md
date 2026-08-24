@@ -27,6 +27,16 @@ npm install
 npm run dev
 ```
 
+## Supabase gallery
+
+1. Create a Supabase project and copy `.env.example` to `.env.local`.
+2. Add the project URL and anon key to `.env.local`.
+3. Run `supabase/schema.sql` in the Supabase SQL Editor.
+4. In Supabase Authentication, create an email/password user for the person who will upload images.
+5. Open `/admin`, sign in, choose a section, and publish an image.
+
+Published images are loaded from `gallery_items` and automatically appear under their selected category. The existing demo images remain as a fallback until the first gallery record is published.
+
 The homepage hero uses the portfolio data as an autoplaying, touch-swipable carousel. The enquiry form sends submissions through FormSubmit to `vijaysharmaphotography@gmail.com`.
 
 ## Checks
