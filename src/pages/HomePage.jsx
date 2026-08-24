@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { FiArrowUpRight, FiMail } from 'react-icons/fi'
 import { FaFacebookF, FaInstagram } from 'react-icons/fa6'
-import { categories, portfolioItems, specialties } from '../data/portfolioData'
+import { categories, specialties } from '../data/portfolioData'
 import PortfolioCard from '../components/PortfolioCard'
 import SiteIntro from '../components/SiteIntro'
 import { supabase } from '../lib/supabase'
@@ -16,7 +16,7 @@ export default function HomePage() {
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const [detailLength, setDetailLength] = useState(0)
-  const [galleryItems, setGalleryItems] = useState(() => (supabase ? [] : portfolioItems))
+  const [galleryItems, setGalleryItems] = useState([])
   const visibleItems = activeCategory === 'All work'
     ? galleryItems
     : galleryItems.filter((item) => item.category === activeCategory)
