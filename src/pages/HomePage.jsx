@@ -16,7 +16,7 @@ export default function HomePage() {
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const [detailLength, setDetailLength] = useState(0)
-  const [galleryItems, setGalleryItems] = useState(portfolioItems)
+  const [galleryItems, setGalleryItems] = useState(() => (supabase ? [] : portfolioItems))
   const visibleItems = activeCategory === 'All work'
     ? galleryItems
     : galleryItems.filter((item) => item.category === activeCategory)
