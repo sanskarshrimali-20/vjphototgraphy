@@ -20,6 +20,7 @@ export default function HomePage() {
   const visibleItems = activeCategory === 'All work'
     ? galleryItems
     : galleryItems.filter((item) => item.category === activeCategory)
+  const introSlides = galleryItems.slice(0, 5)
 
   useEffect(() => {
     const revealItems = document.querySelectorAll('.reveal')
@@ -75,7 +76,7 @@ export default function HomePage() {
 
   return (
     <main>
-      <SiteIntro />
+      <SiteIntro slides={introSlides} />
       <section className="work-section reveal" id="work">
         <div className="work-heading"><div><span className="section-number">Selected archive / 2022—24</span><h2>Recent<br /><em>stories.</em></h2></div><p>Real people, honest colour, and the kind of frames that get better with time.</p></div>
         <div className="filter-row" aria-label="Filter portfolio"><span className="filter-label">Browse by</span>{categories.map((category) => <button className={activeCategory === category ? 'filter active' : 'filter'} type="button" key={category} onClick={() => setActiveCategory(category)}>{category}</button>)}</div>
