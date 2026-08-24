@@ -85,9 +85,11 @@ export default function AdminPage() {
     if (!window.confirm(`Delete ${item.title}?`)) return
     setBusy(true)
     setError('')
-    const { error: deleteError } = await supabase.from('gallery_items').delete().eq('id', item.id)
+    const { data: deletedItems, error: deleteError } = await supabase.from('gallery_items').delete().eq('id', item.id).select('id')
     if (deleteError) {
       setError(deleteError.message)
+    } else if (!deletedItems?.length) {
+      setError('Image was not deleted. Run the gallery delete policy in Supabase SQL Editor.')
     } else {
       const storagePath = item.storage_path || getStoragePath(item.image_url)
       if (storagePath) await supabase.storage.from('portfolio').remove([storagePath])

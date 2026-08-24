@@ -21,6 +21,11 @@ on public.gallery_items for insert
 to authenticated
 with check (true);
 
+create policy "Authenticated users can delete gallery"
+on public.gallery_items for delete
+to authenticated
+using (true);
+
 insert into storage.buckets (id, name, public)
 values ('portfolio', 'portfolio', true)
 on conflict (id) do nothing;
