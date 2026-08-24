@@ -14,7 +14,7 @@ export default function AdminPage() {
   const [year, setYear] = useState(new Date().getFullYear().toString())
   const [category, setCategory] = useState(defaultCategory)
   const [size, setSize] = useState('wide')
-  const [file, setFile] = useState(null)
+  const [files, setFiles] = useState([])
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
@@ -38,29 +38,32 @@ export default function AdminPage() {
 
   async function handleUpload(event) {
     event.preventDefault()
-    if (!file) return setError('Choose an image first.')
+    if (!files.length) return setError('Choose at least one image.')
     setBusy(true)
     setError('')
     setMessage('')
 
-    const filePath = `${category.toLowerCase().replaceAll(' ', '-')}/${crypto.randomUUID()}-${file.name}`
-    const { error: uploadError } = await supabase.storage.from('portfolio').upload(filePath, file, { contentType: file.type, upsert: false })
-    if (uploadError) {
-      setError(uploadError.message)
-      setBusy(false)
-      return
-    }
+    const uploadedPaths = []
+    try {
+      const records = []
+      for (const file of files) {
+        const filePath = `${category.toLowerCase().replaceAll(' ', '-')}/${crypto.randomUUID()}-${file.name}`
+        const { error: uploadError } = await supabase.storage.from('portfolio').upload(filePath, file, { contentType: file.type, upsert: false })
+        if (uploadError) throw uploadError
+        uploadedPaths.push(filePath)
+        const { data: publicUrl } = supabase.storage.from('portfolio').getPublicUrl(filePath)
+        records.push({ category, image_url: publicUrl.publicUrl, size, title, year })
+      }
 
-    const { data: publicUrl } = supabase.storage.from('portfolio').getPublicUrl(filePath)
-    const { error: insertError } = await supabase.from('gallery_items').insert({ category, image_url: publicUrl.publicUrl, size, title, year })
-    if (insertError) {
-      await supabase.storage.from('portfolio').remove([filePath])
-      setError(insertError.message)
-    } else {
-      setMessage('Image uploaded. It is now live in the selected section.')
+      const { error: insertError } = await supabase.from('gallery_items').insert(records)
+      if (insertError) throw insertError
+      setMessage(`${files.length} image${files.length === 1 ? '' : 's'} uploaded. They are now live in the selected section.`)
       setTitle('')
-      setFile(null)
+      setFiles([])
       event.currentTarget.reset()
+    } catch (uploadError) {
+      if (uploadedPaths.length) await supabase.storage.from('portfolio').remove(uploadedPaths)
+      setError(uploadError.message)
     }
     setBusy(false)
   }
@@ -69,7 +72,7 @@ export default function AdminPage() {
 
   if (!session) return <AdminShell><form className="admin-form" onSubmit={handleLogin}><span className="section-number">Studio access</span><h1>Upload <em>work.</em></h1><label>Email<input required type="email" value={email} onChange={(event) => setEmail(event.target.value)} /></label><label>Password<input required type="password" value={password} onChange={(event) => setPassword(event.target.value)} /></label>{error && <p className="submit-error" role="alert">{error}</p>}<button className="submit-button" disabled={busy} type="submit">{busy ? 'Signing in...' : 'Sign in'}</button></form></AdminShell>
 
-  return <AdminShell><div className="admin-heading"><div><span className="section-number">Content studio</span><h1>Add <em>photographs.</em></h1></div><button className="admin-logout" type="button" onClick={() => supabase.auth.signOut()}><FiLogOut /> Sign out</button></div><form className="admin-form" onSubmit={handleUpload}><label>Project title<input required value={title} onChange={(event) => setTitle(event.target.value)} placeholder="The Seven Vows" /></label><div className="admin-fields"><label>Section<select value={category} onChange={(event) => setCategory(event.target.value)}>{categories.slice(1).map((item) => <option key={item}>{item}</option>)}</select></label><label>Year<input required inputMode="numeric" value={year} onChange={(event) => setYear(event.target.value)} /></label><label>Layout<select value={size} onChange={(event) => setSize(event.target.value)}><option value="wide">Wide</option><option value="tall">Tall</option><option value="square">Square</option></select></label></div><label className="file-drop"><FiUpload /><span>{file ? file.name : 'Choose a JPG, PNG, or WebP image'}</span><input accept="image/jpeg,image/png,image/webp" required type="file" onChange={(event) => setFile(event.target.files[0])} /></label>{message && <p className="admin-message" role="status">{message}</p>}{error && <p className="submit-error" role="alert">{error}</p>}<button className="submit-button" disabled={busy} type="submit">{busy ? 'Uploading...' : 'Publish image'} <FiUpload /></button></form></AdminShell>
+  return <AdminShell><div className="admin-heading"><div><span className="section-number">Content studio</span><h1>Add <em>photographs.</em></h1></div><button className="admin-logout" type="button" onClick={() => supabase.auth.signOut()}><FiLogOut /> Sign out</button></div><form className="admin-form" onSubmit={handleUpload}><label>Project title<input required value={title} onChange={(event) => setTitle(event.target.value)} placeholder="The Seven Vows" /></label><div className="admin-fields"><label>Section<select value={category} onChange={(event) => setCategory(event.target.value)}>{categories.slice(1).map((item) => <option key={item}>{item}</option>)}</select></label><label>Year<input required inputMode="numeric" value={year} onChange={(event) => setYear(event.target.value)} /></label><label>Layout<select value={size} onChange={(event) => setSize(event.target.value)}><option value="wide">Wide</option><option value="tall">Tall</option><option value="square">Square</option></select></label></div><label className="file-drop"><FiUpload /><span>{files.length ? `${files.length} image${files.length === 1 ? '' : 's'} selected` : 'Choose one or more JPG, PNG, or WebP images'}</span><input accept="image/jpeg,image/png,image/webp" multiple required type="file" onChange={(event) => setFiles(Array.from(event.target.files))} /></label>{message && <p className="admin-message" role="status">{message}</p>}{error && <p className="submit-error" role="alert">{error}</p>}<button className="submit-button" disabled={busy} type="submit">{busy ? `Uploading ${files.length} images...` : 'Publish images'} <FiUpload /></button></form></AdminShell>
 }
 
 function AdminShell({ children }) {
